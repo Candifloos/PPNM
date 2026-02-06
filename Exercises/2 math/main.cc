@@ -2,7 +2,7 @@
 #include<cmath>
 #include<numbers>
 #include"sfuns.h"
-
+#include <iomanip>
 constexpr double PI = std::numbers::pi;
 constexpr double e = std::numbers::e;
 int main(){

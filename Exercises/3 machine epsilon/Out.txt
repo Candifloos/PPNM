@@ -1,0 +1,19 @@
+      float eps = 1.19209e-07	System epsilon = 1.19209e-07	2^(-23) = 1.19209e-07
+     double eps = 2.22045e-16	System epsilon = 2.22045e-16	2^(-52) = 2.22045e-16
+long double eps = 1.0842e-19	System epsilon = 1.0842e-19
+
+           tiny = 0.00000000000000011
+a = 1+tiny+tiny = 1.00000000000000000
+b = tiny+tiny+1 = 1.00000000000000022
+a==b? false
+a>1 ? false
+b>1 ? true
+
+d1 == d2? false
+d1 = 0.79999999999999993
+d2 = 0.80000000000000004
+Our implementation d1 == d2? true
+
+d3 = 11.00000000000000000
+d4 = 11.00000001000000083
+Our implementation d3 == d4? true
