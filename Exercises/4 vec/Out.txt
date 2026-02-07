@@ -1,0 +1,45 @@
+a = 1 2 5
+b = 0 0 0
+Set new a = 4 2 10
+b = a = 4 2 10
+a * 2 = 8 4 20
+a / 4 = 2 1 5
+a + b = 6 3 15
+a - b = -2 -1 -5
+
+Norm of a = 5.47723
+a dot b = 60
+a x b = 0 0 0
+d = 1 3 -2
+e = a x d = -17 9 5
+
+a ?= e: false
+(a *= 2) =  4 2 10
+a ?= b: true
+<< overload, a = { 4, 2, 10 } 
+
+u = 1 2 3
+v = 5 3 1
+t = 6 5 4
+u + v = 6 5 4
+test operator+ passed 
+
+t = -4 -1 2
+u - v = -4 -1 2
+test operator- passed 
+
+t = -1 -2 -3
+-u = -1 -2 -3
+test unary - passed 
+
+t = 3.5 7 10.5
+alpha * u = 3.5 7 10.5
+test operator* passed 
+
+t = 0.285714 0.571429 0.857143
+u / alpha = 0.285714 0.571429 0.857143
+test operator/ passed 
+
+t = 14
+u * v = 14
+dot operator passed 
