@@ -52,8 +52,8 @@ vec operator-(const vec& a, const vec& b){
     return v;
 }
 vec operator+(const vec& a, const vec& b){
-    vec v = a;
-    v += b;
+    vec v = a;                              //kunne også gøres med vec v(a) nok pænere da den bruger basics ig
+    v += b;                                 //Kunne også passe a som kopi (så ikke constant og & bare vec a) og sige +=b og returne direkte - optimerer en reference passing & mere moderne
     return v;
 }
 vec operator*(const vec& a, double d){
