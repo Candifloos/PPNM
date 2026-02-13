@@ -1,0 +1,50 @@
+doublevec = 3.2 1.4 5.8
+intvec = 2 3 8
+intvec *= 2.6 = 5 7 20
+intvec /= 2 = 2 3 10
+intvec = -1 -5 8
+compv - v1 = (4,2.3) (8.3,1.2) (-6,4.8)
+newvec compv +v1 = (3,2.3) (3.3,1.2) (2,4.8)
+-newvec = ((-3,-2.3), (-3.3,-1.2), (-2,-4.8))
+3
+2.3
+intvec = -1 -5 8
+9.48683
+dotdot = 90
+doubleint = 36.2
+compv = (4,2.3) (8.3,1.2) (-6,4.8)
+doublevec = 3.2 1.4 5.8
+doublecomp = (-10.38,36.88)
+compv= (4,2.3) (8.3,1.2) (-6,4.8)
+compvec norm = 12.2744
+int cross double = -40.2 31.4 14.6
+
+ j = 2	f = (2,4.8)
+j ?= f: false
+intvec ?= compv: false
+ 
+u = 1 2 3
+v = 5.2 3.1 1.6
+t = 6.2 5.1 4.6
+u + v = 6.2 5.1 4.6
+test operator+ passed 
+
+t = -4.2 -1.1 1.4
+u - v = -4.2 -1.1 1.4
+test operator- passed 
+
+t = -1 -2 -3
+-u = -1 -2 -3
+test unary - passed 
+
+t = 3.5 7 10.5
+alpha * u = 3.5 7 10.5
+test operator* passed 
+
+t = 0.285714 0.571429 0.857143
+u / alpha = 0.285714 0.571429 0.857143
+test operator/ passed 
+
+t = 16.2
+u * v = 16.2
+dot operator passed 
