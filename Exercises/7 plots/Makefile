@@ -13,11 +13,11 @@ sfuns.o: sfuns.cc sfuns.h
 
 data: data_erf.txt data_gamma.txt
 
-data_erf.txt: main
+data_erf.txt: main Makefile
 	./main -xmin -2 -xmax 2 -erf > "$@"
 
-data_gamma.txt: main
-	./main -xmin 1 -xmax 10 -gamma > "$@"
+data_gamma.txt: main Makefile
+	./main -xmin -5 -xmax 5 -gamma -dx 0.0625 > "$@"
 
 
 figs: fig_erf.svg fig_gamma.svg fig_lngamma.svg			#ved ikke om der er en pænere måde at gøre det på
@@ -43,7 +43,7 @@ fig_gamma.svg: data_gamma.txt Makefile
 	set ylabel "y" ;\
 	set title "Gamma function" ;\
 	set grid 	;\
-	plot\
+	plot [] [-5:5]\
 		"$<" using 1:2 with points title "Approx points", \
 		gamma(x) with lines \
 	' | tee log.fig_gamma.gp | gnuplot

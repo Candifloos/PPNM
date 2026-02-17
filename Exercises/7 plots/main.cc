@@ -17,7 +17,7 @@ int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
 		std::string arg=argv[i];
 		std::cerr<<"i= "<<i<<" arg="<<arg<<"\n";
-		if(arg=="-xmin" && i+1<argc)xmin=std::stod(argv[i+1]);
+		if(arg=="-xmin" && i+1<argc)xmin=std::stod(argv[i+1]);      //kan også gøres med argv[++i] som så incrementer i direkte, slightly mere effektivt
 		if(arg=="-xmax" && i+1<argc)xmax=std::stod(argv[i+1]);
 		if(arg=="-dx" && i+1<argc)dx=std::stod(argv[i+1]);
         if (arg == "-erf") do_erf = true;
