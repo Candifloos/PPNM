@@ -20,9 +20,9 @@ data_gamma.txt: main Makefile
 	./main -xmin -5 -xmax 5 -gamma -dx 0.0625 > "$@"
 
 
-figs: fig_erf.svg fig_gamma.svg fig_lngamma.svg			#ved ikke om der er en pænere måde at gøre det på
+figs: Fig_erf.svg Fig_gamma.svg Fig_lngamma.svg			#ved ikke om der er en pænere måde at gøre det på
 
-fig_erf.svg: data_erf.txt Makefile
+Fig_erf.svg: data_erf.txt Makefile
 	echo '\
 	set terminal svg ;\
 	set output "$@" ;\
@@ -35,7 +35,7 @@ fig_erf.svg: data_erf.txt Makefile
 		erf(x) with lines \
 	' | tee log.fig_erf.gp | gnuplot
 
-fig_gamma.svg: data_gamma.txt Makefile
+Fig_gamma.svg: data_gamma.txt Makefile
 	echo '\
 	set terminal svg ;\
 	set output "$@" ;\
@@ -48,7 +48,7 @@ fig_gamma.svg: data_gamma.txt Makefile
 		gamma(x) with lines \
 	' | tee log.fig_gamma.gp | gnuplot
 
-fig_lngamma.svg: data_gamma.txt Makefile
+Fig_lngamma.svg: data_gamma.txt Makefile
 	echo '\
 	set terminal svg ;\
 	set output "$@" ;\

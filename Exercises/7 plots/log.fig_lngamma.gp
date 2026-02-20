@@ -1,6 +1,6 @@
 \
 set terminal svg ;\
-set output "fig_lngamma.svg" ;\
+set output "Fig_lngamma.svg" ;\
 set xlabel "x" ;\
 set ylabel "y" ;\
 set title "lngamma function" ;\

@@ -1,6 +1,6 @@
 \
 set terminal svg ;\
-set output "times.svg" ;\
+set output "Times.svg" ;\
 set xlabel "Threads" ;\
 set ylabel "Time [s]" ;\
 set title "Harmonic sum with 2e9 terms "   ;\

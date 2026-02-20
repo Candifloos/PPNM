@@ -4,7 +4,7 @@ TIME = time --append --output $@ --format "$$nthreads %e %U"
 
 
 
-all: times.svg
+all: Times.svg
 
 
 main: main.o sfuns.o
@@ -24,7 +24,7 @@ out.times : main #Makefile
 	done
 
 
-times.svg: out.times Makefile
+Times.svg: out.times Makefile
 	echo '\
 	set terminal svg ;\
 	set output "$@" ;\

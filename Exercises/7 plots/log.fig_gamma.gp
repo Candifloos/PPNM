@@ -1,6 +1,6 @@
 \
 set terminal svg ;\
-set output "fig_gamma.svg" ;\
+set output "Fig_gamma.svg" ;\
 set xlabel "x" ;\
 set ylabel "y" ;\
 set title "Gamma function" ;\

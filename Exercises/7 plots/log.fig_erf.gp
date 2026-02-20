@@ -1,6 +1,6 @@
 \
 set terminal svg ;\
-set output "fig_erf.svg" ;\
+set output "Fig_erf.svg" ;\
 set xlabel "x" ;\
 set ylabel "y" ;\
 set title "Error function" ;\
