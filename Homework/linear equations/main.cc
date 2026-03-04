@@ -1,4 +1,5 @@
 #include"matrix.h"
+#include"qr.h"
 #include<utility>
 #include <chrono>
 #include<fstream>

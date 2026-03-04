@@ -222,15 +222,14 @@ inline vector operator*(const matrix& A, const vector& v)
 
 
 
-//MY STUFF
 
-    class QR {
-        public:
-        static std::tuple<matrix, matrix> decomp(const matrix& A);
-        static vector solve(matrix& Q, matrix& R, vector b);
-        static double det(matrix R);
-        static matrix inverse(matrix Q,matrix R);
-    };
+    // class QR {
+    //     public:
+    //     static std::tuple<matrix, matrix> decomp(const matrix& A);
+    //     static vector solve(matrix& Q, matrix& R, vector b);
+    //     static double det(matrix R);
+    //     static matrix inverse(matrix Q,matrix R);
+    // };
 
 
 }

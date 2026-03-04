@@ -222,7 +222,6 @@ inline vector operator*(const matrix& A, const vector& v)
 
 
 
-//MY STUFF
 
     class QR {
         public:

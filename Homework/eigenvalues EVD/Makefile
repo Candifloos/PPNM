@@ -29,7 +29,7 @@ out.rmaxs.data : main
 
 out.wavefuncs.data : main
 # 	>$@									#laver ny fil, main appender så hvis den ikke overwrites her bliver den bare længere & længere
-	./main --testoff --wavefuncout $@ --rmax 25 --dr 0.2;\
+	./main --testoff --wavefuncout $@ --rmax 30 --dr 0.2;\
 
 Wavefuncs.svg: out.wavefuncs.data
 	echo '\

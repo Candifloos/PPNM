@@ -5,9 +5,10 @@ TIME = time --append --output $@ --format #"$$nthreads %e %U"
 
 Out.txt:main ; ./$< > $@
 
-main: main.o matrix.o
+main: main.o matrix.o qr.o
 main.o: matrix.h main.cc		#matrix.h matrix.cc
 matrix.o: matrix.h matrix.cc
+qr.o: qr.h qr.cc matrix.cc matrix.h
 
 clean:
 	$(RM) [Oo]ut* main *.o err log* *.svg *.log
