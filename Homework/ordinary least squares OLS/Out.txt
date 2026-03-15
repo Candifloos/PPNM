@@ -1,0 +1,11 @@
+As f(y) = ln(y) the uncertainty dy can be found as df = f'(y)dy  = 1/y dy 
+ 
+Optimal parameters found to be a = 4.95866,  lambda = 0.170624
+With a covariance matrix of 
+ 0.0012533 0.00019706 
+0.00019706 5.1217e-05 
+Giving errors as the square root of the diagonal = 0.0354019, 0.00715662
+
+ Determined half life from fit = 4.06242 +- 0.170394 days, modern value is 3.6319 days 
+Where the error is found from dT = |T'(lambda) dlambda| = ln(2)/lambda^2 dlambda 
+The found value is thus 2.52664 standard deviations from the modern value 
