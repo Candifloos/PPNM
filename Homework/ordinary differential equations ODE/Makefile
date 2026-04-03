@@ -28,8 +28,9 @@ precession.data : main Makefile
 tbo.data : main Makefile
 	./main --tbo --xmax 6.3252 > "$@"
 
-tboButterfly.data : main Makefile	#Slight drift can be reduced by reducing eps, acc but increases time quite a lot
+tboButterfly.data : main #Makefile	#Slight drift can be reduced by reducing eps, acc but increases time quite a lot, 1e-4 seem to produce good results
 	./main --butterfly --xmax 50 --eps 1e-4 --acc 1e-4  > "$@"
+#note that if changing eps, acc one should probably also change "every 50" in the plotting
 
 Oscillator.svg : oscillator.data
 	@echo ' \
@@ -70,7 +71,7 @@ TBO.svg : tbo.data
 			"$<" index 0 using 6:7 with lines lw 3 lt 4 dt 4 title "Body 3",\
 	' | gnuplot
 
-ButterflyTBO.svg : tboButterfly.data
+ButterflyTBO.svg : tboButterfly.data Makefile
 	@echo ' \
 		set terminal svg background "white" ; \
 		set output "$@" ; \
@@ -78,7 +79,7 @@ ButterflyTBO.svg : tboButterfly.data
 		set ylabel "y" ; \
 		set grid ; \
 		plot \
-			"$<" index 0 using 2:3 with lines title "Body 1",\
-			"$<" index 0 using 4:5 with lines title "Body 2",\
-			"$<" index 0 using 6:7 with lines title "Body 3",\
+			"$<" index 0 every 50 using 2:3 with lines title "Body 1",\
+			"$<" index 0 every 50 using 4:5 with lines title "Body 2",\
+			"$<" index 0 every 50 using 6:7 with lines title "Body 3",\
 	' | gnuplot
