@@ -19,7 +19,7 @@ int main(int argc, char** argv){
     for (int i = 0; i < argc; i++){
         std::string arg = argv[i];
         if (arg == "--stepper" && i+1 < argc && argv[++i] == "RK12") stepper = pp::rkstep12;    //can set stepper to RK12 if desired
-        if ((arg == "--relepsilon" || arg == "--releps") && i+1 < argc) eps = std::stod(argv[++i]);
+        if ((arg == "--relepsilon" || arg == "--releps") && i+1 < argc) releps = std::stod(argv[++i]);
         if ((arg == "--precession_flag" || arg == "--precession")) precession_flag = true; 
         if ((arg == "--oscillator_flag" || arg == "--oscillator")) oscillator_flag = true; 
         if ((arg == "--tbo_flag" || arg == "--tbo")) tbo_flag = true; 
