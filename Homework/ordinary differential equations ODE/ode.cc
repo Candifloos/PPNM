@@ -34,66 +34,11 @@ namespace pp{
 	return std::make_tuple(yh,δy);
 }
 
-
-    // std::tuple<std::vector<double>, std::vector<vector>> driver(
-    //     std::function<vector(double, vector)> F,
-    //     double a, double b,
-    //     vector yinit,
-    //     double h, double acc, double eps, std::string stepper
-    // ) {
-    //     double x = a; 
-    //     vector y = yinit;
-    //     std::vector<double> xlist; xlist.push_back(x);
-    //     std::vector<vector> ylist; ylist.push_back(y);
-
-    //     do {
-    //         if (x >= b) return std::make_tuple(xlist, ylist);
-    //         if (x + h > b) h = b - x;
-        
-    //         vector yh, δy; 
-    //         if (stepper == "RK12") {
-    //             auto [tmp_yh, tmp_dy] = rkstep12(F, x, y, h);
-    //             yh = tmp_yh; δy = tmp_dy;
-    //         } 
-    //         else if (stepper == "RK23") {
-    //             auto [tmp_yh, tmp_dy] = rkstep23(F, x, y, h);
-    //             yh = tmp_yh; δy = tmp_dy;
-    //         } 
-    //         else {
-    //             throw std::runtime_error("stepper should be either RK12 or RK23");
-    //         }
-    //         // auto [yh, δy] = rkstep23(F, x, y, h);
-
-    //         // Tolerance scaling
-    //         double tol = (acc + eps * yh.norm()) * std::sqrt(h / (b - a));
-    //         double err = δy.norm();
-
-    //         if (err <= tol) { // Step accepted
-    //             x += h; 
-    //             y = yh;
-    //             xlist.push_back(x);
-    //             ylist.push_back(y);
-    //         }
-
-    //         // Step size adjustment
-    //         if (err > 0) {
-    //             h *= std::min(std::pow(tol / err, 0.25) * 0.95, 2.0);
-    //         } else {
-    //             h *= 2.0;
-    //         }
-            
-    //         // Safety check to prevent infinite loops if h becomes tiny
-    //         // if (std::abs(h) < 1e-15) {
-    //         //     // You might want to throw an error or break here
-    //         //     return std::make_tuple(xlist, ylist);
-    //         // }
-    //     } while (true);
-    // }//driver
-       std::tuple<std::vector<double>, std::vector<vector>> driver(
+std::tuple<std::vector<double>, std::vector<vector>> driver(
         std::function<vector(double, vector)> F,
         double a, double b,
         vector yinit, stepper_type stepper, double max_step,
-        double h, double acc, double eps
+        double acc, double eps, double h
     ) {
         double x = a; 
         vector y = yinit;

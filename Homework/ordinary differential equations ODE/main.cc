@@ -13,19 +13,23 @@ void writeData(const std::vector<double>& x, const std::vector<pp::vector>& y){
 
 int main(int argc, char** argv){
     pp::stepper_type stepper = pp::rkstep23;        //default stepper is RK23
-    double eps = 0, x0 = 0, xmax = 50, max_step = 1e8;
-    bool oscillator_flag = false, precession_flag = false, tbo_flag = false; 
+    double releps = 0, x0 = 0, xmax = 50, max_step = 1e8, acc = 0.01, eps = 0.01;
+    bool oscillator_flag = false, precession_flag = false, tbo_flag = false, butterfly_flag = false; 
     pp::vector u0(2); u0[0] = 1; u0[1] = 0;
     for (int i = 0; i < argc; i++){
         std::string arg = argv[i];
         if (arg == "--stepper" && i+1 < argc && argv[++i] == "RK12") stepper = pp::rkstep12;    //can set stepper to RK12 if desired
-        if ((arg == "--epsilon" || arg == "--eps") && i+1 < argc) eps = std::stod(argv[++i]);
+        if ((arg == "--relepsilon" || arg == "--releps") && i+1 < argc) eps = std::stod(argv[++i]);
         if ((arg == "--precession_flag" || arg == "--precession")) precession_flag = true; 
         if ((arg == "--oscillator_flag" || arg == "--oscillator")) oscillator_flag = true; 
         if ((arg == "--tbo_flag" || arg == "--tbo")) tbo_flag = true; 
+        if ((arg == "--butterfly_flag" || arg == "--butterfly")) butterfly_flag = true; 
         if (arg == "--x0" && i+1 < argc) x0 = std::stod(argv[++i]);
         if (arg == "--xmax" && i+1 < argc) xmax = std::stod(argv[++i]);
         if ((arg == "--max_step") && i+1 < argc) max_step = std::stod(argv[++i]);
+        if (arg == "--eps" && i+1 < argc) max_step = std::stod(argv[++i]);
+        if (arg == "--acc" && i+1 < argc) max_step = std::stod(argv[++i]);
+
         if ((arg == "--u0" || arg == "--init") && i+2 < argc) {u0[0] = std::stod(argv[++i]); u0[1] = std::stod(argv[++i]);}
     }
 
@@ -36,11 +40,11 @@ int main(int argc, char** argv){
         res[1] = -b * y[1] - c * std::sin(y[0]);
         return res;
     };
-    auto precession = [eps](double x, const pp::vector& y){
+    auto precession = [releps](double x, const pp::vector& y){
         /*y = (u,u') = (u', 1-u + eps*u*u)*/
         pp::vector res(y.size());
         res[0] = y[1];
-        res[1] = 1 - y[0] + eps * y[0]*y[0];
+        res[1] = 1 - y[0] + releps * y[0]*y[0];
         return res;
     };
 
@@ -70,20 +74,31 @@ int main(int argc, char** argv){
 
     if (oscillator_flag){
     pp::vector y0(2); y0[0] = 3; y0[1] = 0;
-    auto [x,y] = pp::driver(oscillator, x0, xmax, y0, stepper, max_step);
+    auto [x,y] = pp::driver(oscillator, x0, xmax, y0, stepper, max_step, acc, eps);
     writeData(x, y);
     };
 
     if (precession_flag){
-    auto [phi,u] = pp::driver(precession, x0, xmax, u0, stepper, max_step); 
+    auto [phi,u] = pp::driver(precession, x0, xmax, u0, stepper, max_step, acc, eps); 
     writeData(phi,u);
 }
 
-    if (tbo_flag){
+    if (tbo_flag || butterfly_flag){
     pp::vector z0(12); 
     z0[0] = 0.466203685; z0[1] = 0.43236572; z0[2] = 0.466203685; z0[3] = 0.43236573; z0[4] = -0.93240737; z0[5] = -0.86473146;
     z0[6] = 0.97000436; z0[7] = -0.24308753; z0[8] -= z0[6]; z0[9] -= z0[7]; //last two are zero
-    auto [t,z] = pp::driver(tbo, x0, xmax, z0, stepper, max_step); 
+    
+    if (butterfly_flag){
+    double v1 = 0.30689, v2 = 0.12551;     
+    z0[0] = v1;    z0[1] = v2;    // Body 1 v
+    z0[2] = v1;    z0[3] = v2;    // Body 2 v
+    z0[4] = -2*v1; z0[5] = -2*v2; // Body 3 v (CM stays at zero)
+    z0[6]  = -1.0; z0[7]  = 0.0;  // Body 1: (-1, 0)
+    z0[8]  =  1.0; z0[9]  = 0.0;  // Body 2: (1, 0)
+    z0[10] =  0.0; z0[11] = 0.0;  // Body 3: (0, 0)
+    };
+
+    auto [t,z] = pp::driver(tbo, x0, xmax, z0, stepper, max_step, acc, eps); 
     int n = t.size();
     for (int i = 0; i < n; i++){
         std::cout << t[i] << " " << z[i][6] << " " << z[i][7] << " " << z[i][8] << " " << z[i][9] << " " << z[i][10] << " " << z[i][11] << "\n";

@@ -18,8 +18,8 @@ namespace pp {
         vector yinit, 
         stepper_type stepper = rkstep23, // Defaults go in header
         double max_step = 1e20,
-        double h = 0.125,   
         double acc = 0.01, 
-        double eps = 0.01
+        double eps = 0.01,
+        double h = 0.125   
     );
 }

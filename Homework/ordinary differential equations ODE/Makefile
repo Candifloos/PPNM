@@ -2,9 +2,7 @@ CXXFLAGS += -std=c++23 -Wextra
 LDLIBS += -lstdc++ -lm
 TIME = time --append --output $@ --format "$$nthreads %e"
 
-# Out.txt:main ; ./$< > $@
-# figs: Linspline.svg Quadspline.svg Cubespline.svg
-figs: Oscillator.svg Precession.svg TBO.svg
+figs: Oscillator.svg Precession.svg TBO.svg ButterflyTBO.svg
 
 main: main.o matrix.o ode.o
 main.o: matrix.h main.cc ode.o
@@ -25,13 +23,13 @@ precession.data : main Makefile
 	./main --precession --u0 1 -0.5 --xmax 200 >> "$@"
 	@echo "" >> $@
 	@echo "" >> $@
-	./main --precession --u0 1 -0.5 --eps 0.01 --xmax 200 >> "$@"
+	./main --precession --u0 1 -0.5 --releps 0.01 --xmax 200 >> "$@"
 
 tbo.data : main Makefile
 	./main --tbo --xmax 6.3252 > "$@"
 
-# tbo.data : main Makefile	#works fine, just cant discern the three orbits
-# 	./main --tbo --xmax 63.252  > "$@"
+tboButterfly.data : main Makefile	#Slight drift can be reduced by reducing eps, acc but increases time quite a lot
+	./main --butterfly --xmax 50 --eps 1e-4 --acc 1e-4  > "$@"
 
 Oscillator.svg : oscillator.data
 	@echo ' \
@@ -70,4 +68,17 @@ TBO.svg : tbo.data
 			"$<" index 0 using 2:3 with lines lw 3 title "Body 1",\
 			"$<" index 0 using 4:5 with lines lw 3 lt 2 dt 2 title "Body 2",\
 			"$<" index 0 using 6:7 with lines lw 3 lt 4 dt 4 title "Body 3",\
+	' | gnuplot
+
+ButterflyTBO.svg : tboButterfly.data
+	@echo ' \
+		set terminal svg background "white" ; \
+		set output "$@" ; \
+		set xlabel "x" ; \
+		set ylabel "y" ; \
+		set grid ; \
+		plot \
+			"$<" index 0 using 2:3 with lines title "Body 1",\
+			"$<" index 0 using 4:5 with lines title "Body 2",\
+			"$<" index 0 using 6:7 with lines title "Body 3",\
 	' | gnuplot
