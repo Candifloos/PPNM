@@ -1,0 +1,26 @@
+Using acc, eps = 0.001 
+Integral of sqrt(x) from 0 to 1 is       0.666954 - expected 2/3 
+Integral of 1/sqrt(x) from 0 to 1 is     1.99996 - expected 2 
+Integral of sqrt(1-x^2) from 0 to 1 is   0.785812 - expected pi/4
+Integral of ln(x)/sqrt(x) from 0 to 1 is -3.99992 - expected -4
+Calls = 7 4285 7 4301
+
+ Using Clenshaw-Curtis integrator we get: 
+Integral of 1/sqrt(x) from 0 to 1 is     1.99999 - expected 2 
+Integral of ln(x)/sqrt(x) from 0 to 1 is -3.99987 - expected -4
+Calls = X 7    X 47
+That is the non-variable quadrature makes 612, 91 times the calls 
+Scipy uses 231, 315 calls for the two functions respectively 
+ 
+Infinite integrals 
+Integral of x^3*e^(-x^2) from 0 to infinity is 0.499926 ± 0.000365136 using 31 calls 
+Integral of x^3*e^(-x^2) from -infinity to 0 is -0.499926 ± 0.000365136 using 31 calls 
+With an expected result of +-1/2 respectively 
+Integral of sin(x)*x^3*e^(-x^2) from 0 to infinity is 0.431293 ± 0.000432032 using 29 calls 
+Integral of sin(x)*x^3*e^(-x^2) from -infinity to infinity is 0.862944 ± 0.000537284 using 47 calls 
+With an expected result of 0.862743/2 ≈ 0.43137, 0.862743 respectively 
+Scipy uses 75, 75, 75, 150 evaluations for the 4 integrals 
+
+Ratio between estimated and actual error for above four integrals are: 
+4.93305 4.93305 5.51472 2.67134
+i.e. errors generally tend to be overestimated, alligning with expectations 
