@@ -8,7 +8,7 @@
 pp::vector Rosenbrock_grad(const pp::vector& x){
     pp::vector grad(2);
     grad[0] = -2 * (1-x[0]) + 400 * x[0] * (x[0]*x[0] - x[1]);
-    grad[1] = 200 * (x[0] - x[1]*x[1]);
+    grad[1] = 200 * (x[1] - x[0]*x[0]);
     return grad;
 }
 //Himmelblau f(x,y) = (x^2 + y -11)^2 + (x + y^2 - 7)^2
@@ -22,20 +22,20 @@ pp::vector Himmelblau_grad(const pp::vector& x){
     return grad;  
 }
 void part_A(){
-    pp::vector x1 = {5,2};
-    pp::vector x2 = {500,22};
-    pp::vector R_roots1 = pp::newton(Rosenbrock_grad, x1, 1e-3, 1e-3, 1000);
+    pp::vector x1 = {-3,7};
+    pp::vector x2 = {50,22};
+    pp::vector R_roots1 = pp::newton(Rosenbrock_grad, x1, 1e-3, 1e-3, 100000);
     pp::vector R_roots2 = pp::newton(Rosenbrock_grad, x2, 1e-3, 1e-3, 100000);
-    std::cout << "Extremum of Rosenbrock valley function for initial guess (5,2) at x = " << R_roots1[0] << " y = " << R_roots1[1] << "\n";
-    std::cout << "Extremum of Rosenbrock valley function for initial guess (500,22) at x = " << R_roots2[0] << " y = " << R_roots2[1] << "\n";
+    std::cout << "Extremum of Rosenbrock valley function for initial guess (-3,7) at x = " << R_roots1[0] << " y = " << R_roots1[1] << "\n";
+    std::cout << "Extremum of Rosenbrock valley function for initial guess (50,22) at x = " << R_roots2[0] << " y = " << R_roots2[1] << "\n";
     std::cout << "With gradient values: \n";
     std::cout << Rosenbrock_grad(R_roots1)[0] << " " << Rosenbrock_grad(R_roots1)[1] << "\n";
     std::cout << Rosenbrock_grad(R_roots2)[0] << " " << Rosenbrock_grad(R_roots2)[1] << "\n";
 
-    pp::vector H_roots1 = pp::newton(Himmelblau_grad, x1, 1e-3, 1e-3, 1000);
+    pp::vector H_roots1 = pp::newton(Himmelblau_grad, x1, 1e-3, 1e-3, 100000);
     pp::vector H_roots2 = pp::newton(Himmelblau_grad, x2, 1e-3, 1e-3, 100000);
-    std::cout << "Extremum of Himmelblau function for initial guess (5,2) at x = " << H_roots1[0] << " y = " << H_roots1[1] << "\n";
-    std::cout << "Extremum of Himmelblau function for initial guess (500,22) at x = " << H_roots2[0] << " y = " << H_roots2[1] << "\n";
+    std::cout << "Extremum of Himmelblau function for initial guess (-3,7) at x = " << H_roots1[0] << " y = " << H_roots1[1] << "\n";
+    std::cout << "Extremum of Himmelblau function for initial guess (50,22) at x = " << H_roots2[0] << " y = " << H_roots2[1] << "\n";
     std::cout << "With gradient values: \n";
     std::cout << Himmelblau_grad(H_roots1)[0] << " " << Himmelblau_grad(H_roots1)[1] << "\n";
     std::cout << Himmelblau_grad(H_roots2)[0] << " " << Himmelblau_grad(H_roots2)[1] << "\n\n";
@@ -90,7 +90,7 @@ int main(int argc, char** argv){
         part_A();
         double E = SE_shooting_method(r_min, r_max, yinit, E0, ODE_acc, ODE_eps);
         std::cout << "Extremum found for Schrödinger equation M(E) with E = " << E << " intial guess being " << E0[0] << "\n";
-        std::cout << "The convergence plots generally see an increase in E accuracy till they get limited by the other parameters";
+        std::cout << "The convergence plots generally see an increase in E accuracy till they get limited by the other parameters \n";
     }
         
     if (wavefunc){

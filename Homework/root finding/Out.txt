@@ -1,13 +1,13 @@
-Extremum of Rosenbrock valley function for initial guess (5,2) at x = 1 y = 1
-Extremum of Rosenbrock valley function for initial guess (500,22) at x = 0.0285882 y = -0.16908
+Extremum of Rosenbrock valley function for initial guess (-3,7) at x = 0.999999 y = 0.999998
+Extremum of Rosenbrock valley function for initial guess (50,22) at x = 1.00002 y = 1.00004
 With gradient values: 
--6.16382e-07 -7.01456e-07
-1.5208e-06 4.30323e-06
-Extremum of Himmelblau function for initial guess (5,2) at x = 3 y = 2
-Extremum of Himmelblau function for initial guess (500,22) at x = -3.07303 y = -0.0813528
+5.86515e-06 -3.80318e-06
+0.00023321 -9.78452e-05
+Extremum of Himmelblau function for initial guess (-3,7) at x = -2.80512 y = 3.13131
+Extremum of Himmelblau function for initial guess (50,22) at x = 3 y = 2
 With gradient values: 
-7.90554e-08 1.28725e-08
--0.000100764 7.49847e-06
+3.6802e-09 6.57726e-08
+9.5895e-09 7.91184e-08
 
 Extremum found for Schrödinger equation M(E) with E = -0.499939 intial guess being -0.9
-The convergence plots generally see an increase in E accuracy till they get limited by the other parameters
+The convergence plots generally see an increase in E accuracy till they get limited by the other parameters 
