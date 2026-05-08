@@ -1,0 +1,93 @@
+
+
+*******************************************************************************
+Fri May  1 10:05:21 2026
+
+
+FIT:    data read from "circle.data" using 1:4
+        format = x:z
+        x range restricted to [750.000 : 1.50000e+06]
+        #datapoints = 50
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x) = a/sqrt(x)
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a            
+   0 3.2886440439e-03   0.00e+00  1.23e-02    1.000000e+00
+   2 3.2810639239e-03  -8.88e-02  1.23e-04    9.684195e-01
+
+After 2 iterations the fit converged.
+final sum of squares of residuals : 0.00328106
+rel. change during last iteration : -8.88221e-07
+
+degrees of freedom    (FIT_NDF)                        : 49
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.00818294
+variance of residuals (reduced chisquare) = WSSR/ndf   : 6.69605e-05
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a               = 0.96842          +/- 0.09386      (9.692%)
+
+
+*******************************************************************************
+Fri May  1 10:05:29 2026
+
+
+FIT:    data read from "halton.data" using 1:4
+        format = x:z
+        x range restricted to [750.000 : 1.50000e+06]
+        #datapoints = 50
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x) = a/sqrt(x)
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a            
+   0 6.5811697684e-03   0.00e+00  1.23e-02    1.000000e+00
+   3 8.4118812885e-06  -1.20e-03  1.23e-05    7.005782e-02
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 8.41188e-06
+rel. change during last iteration : -1.20116e-08
+
+degrees of freedom    (FIT_NDF)                        : 49
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.000414332
+variance of residuals (reduced chisquare) = WSSR/ndf   : 1.71671e-07
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a               = 0.0700578        +/- 0.004753     (6.784%)
+
+
+*******************************************************************************
+Fri May  1 10:05:29 2026
+
+
+FIT:    data read from "halton.data" using 1:4
+        format = x:z
+        x range restricted to [750.000 : 1.50000e+06]
+        #datapoints = 50
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g(x)
+	g(x) = b*log(x)*log(x) / x
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   b            
+   0 1.0874145178e-02   0.00e+00  1.56e-02    1.000000e+00
+   3 8.1608547796e-06  -2.05e-03  1.56e-05    5.552478e-02
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 8.16085e-06
+rel. change during last iteration : -2.04682e-08
+
+degrees of freedom    (FIT_NDF)                        : 49
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.000408103
+variance of residuals (reduced chisquare) = WSSR/ndf   : 1.66548e-07
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+b               = 0.0555248        +/- 0.003698     (6.659%)

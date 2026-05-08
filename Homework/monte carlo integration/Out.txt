@@ -1,0 +1,11 @@
+Integral of ellipsoid is 25.3822 ± 0.219961
+Expected 25.1327
+ 
+Integral of (1-cos(x)cos(y)cos(z))^-1 using 1000000 samples is: 
+Plain mc = 1.38901 ± 0.00792039
+Halton = 1.38843 ± 0.00443782
+c++ generator = 1.38369 ± 0.00574035
+Expected 1.39320 
+Which are generally fairly close. For this particular seed & samples the plain MC seems to hit the closest, althoughits error estimate is larger than for the Quasi-random one 
+Stratified sampling gives = 1.38852 ± 0.00717109
+Alligning with previous estimates 
