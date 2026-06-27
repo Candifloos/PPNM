@@ -81,8 +81,8 @@ int main(int argc, char** argv){
         if (arg == "--r_max" && i+1<argc) r_max = std::stod(argv[++i]);
         if (arg == "--ODE_acc" && i+1<argc) ODE_acc = std::stod(argv[++i]);
         if (arg == "--ODE_eps" && i+1<argc) ODE_eps = std::stod(argv[++i]);
-
     }
+    
     pp::vector yinit = {r_min - std::pow(r_min, 2), 1.0 - 2.0 * r_min};
     pp::vector E0 = {-0.9}; double E_exact = -0.5;
 

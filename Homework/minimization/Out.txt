@@ -1,0 +1,5 @@
+Starting point used is (5,-3)
+Minimum for Rosenbrock found at 1.00004 1.00007 with function value 1.34599e-09 using 29 steps
+Minimum for Himmelblau found at 3.58443 -1.84813 with function value 5.50349e-14 using 5 steps
+Alligning with expectations that the minimum should be 0 in both cases 
+Fitparams for Higgs (m, gamma, A) = 125.972 2.0864 9.87646
