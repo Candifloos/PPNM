@@ -1,0 +1,188 @@
+The project implements both a simple Levenberg–Marquardt Trust-Region Damped
+Newton (LM) Minimizer and a more advanced version. The two will be referred to
+as Simple LM and Adaptive LM. These are compared to a simple Newton
+back-tracking linesearch (Newton + LS) algorithm and a similar Newton
+but with a fallback to a simple gradient descent if the linesearch fails
+(LS + Fallback). All four models are tested first on the Himmelblau
+function for different starting points:
+
+====================================================================
+ BENCHMARK: Himmelblau
+====================================================================
+
+Starting Point:  (1.5, 1.5)
+| Algorithm      | Iterations  | f_evals  | QR_evals |  Final (x, y)   | Final f(x)  |
+|----------------|-------------|----------|----------|-----------------|-------------|
+|    Newton + LS |          14 |      268 |       14 |  (-2.80, 3.131) |  3.0777e-14 |
+|  LS + Fallback |          11 |      195 |       11 |  (-2.80, 3.131) | 5.50709e-14 |
+|      Simple LM |           6 |       91 |       15 |  (3.000, 1.999) | 7.17044e-11 |
+|    Adaptive LM |           6 |       86 |       10 |  (3.000, 1.999) | 4.51146e-10 |
+
+Starting Point:  (-2, 2)
+| Algorithm      | Iterations  | f_evals  | QR_evals |  Final (x, y)   | Final f(x)  |
+|----------------|-------------|----------|----------|-----------------|-------------|
+|    Newton + LS |           5 |       70 |        5 |  (-2.80, 3.131) | 4.79535e-14 |
+|  LS + Fallback |           5 |       70 |        5 |  (-2.80, 3.131) | 4.79535e-14 |
+|      Simple LM |           5 |       76 |       12 |  (-2.80, 3.131) | 1.42096e-09 |
+|    Adaptive LM |           6 |       86 |       10 |  (-2.80, 3.131) | 6.57413e-12 |
+
+Starting Point:  (-100, 100)
+| Algorithm      | Iterations  | f_evals  | QR_evals |  Final (x, y)   | Final f(x)  |
+|----------------|-------------|----------|----------|-----------------|-------------|
+|    Newton + LS |          13 |      173 |       13 |  (-2.80, 3.131) | 4.90938e-14 |
+|  LS + Fallback |          13 |      173 |       13 |  (-2.80, 3.131) | 4.90938e-14 |
+|      Simple LM |          13 |      173 |       13 |  (-2.80, 3.131) | 4.90975e-14 |
+|    Adaptive LM |          13 |      173 |       13 |  (-2.80, 3.131) | 4.90876e-14 |
+
+Starting Point:  (2, 100)
+| Algorithm      | Iterations  | f_evals  | QR_evals |  Final (x, y)   | Final f(x)  |
+|----------------|-------------|----------|----------|-----------------|-------------|
+|    Newton + LS |          13 |      173 |       13 |  (-2.80, 3.131) |  6.0625e-14 |
+|  LS + Fallback |          12 |      160 |       12 |  (-2.80, 3.131) | 7.14289e-10 |
+|      Simple LM |          12 |      160 |       12 |  (-2.80, 3.131) | 7.14579e-10 |
+|    Adaptive LM |          12 |      160 |       12 |  (-2.80, 3.131) | 7.12766e-10 |
+
+Where I have tracked 3 primary metrics: the number of iterations, function
+evaluations (f_evals), and calls to a QR-solver (QR_evals). Each iteration
+will evaluate the gradient and Hessian matrix once, causing (1+dim) and
+(1+dim)^2 function evaluations respectively; these evaluations are included
+in f_evals. We see that the two Newton methods tend to have similar or more
+function evaluations, while the LM methods have similar or more QR
+evaluations. This is expected behavior as the Newton methods evaluate the
+function every time they readjust λ and only call QR once per iteration,
+while the LM variants call the QR-solver every time they readjust λ.
+Overall, all 4 methods seem to handle the Himmelblau function without many
+problems. As a second test, we can try the Rosenbrock function:
+
+====================================================================
+ BENCHMARK: Rosenbrock
+====================================================================
+
+Starting Point:  (1.5, 1.5)
+| Algorithm      | Iterations  | f_evals  | QR_evals |  Final (x, y)   | Final f(x)  |
+|----------------|-------------|----------|----------|-----------------|-------------|
+|    Newton + LS |        2189 |    50243 |     2189 |  (0.999, 0.999) |  3.5812e-11 |
+|  LS + Fallback |          10 |      136 |       10 |  (1.000, 1.000) | 6.32522e-09 |
+|      Simple LM |          10 |      137 |       13 |  (1.000, 1.000) | 6.79247e-10 |
+|    Adaptive LM |          10 |      136 |       12 |  (1.000, 1.000) | 2.09419e-10 |
+
+Starting Point:  (-2, 2)
+| Algorithm      | Iterations  | f_evals  | QR_evals |  Final (x, y)   | Final f(x)  |
+|----------------|-------------|----------|----------|-----------------|-------------|
+|    Newton + LS |          26 |      352 |       26 |  (0.999, 0.999) | 9.03995e-11 |
+|  LS + Fallback |          24 |      326 |       24 |  (0.999, 0.999) | 6.18589e-09 |
+|      Simple LM |          24 |      335 |       43 |  (0.999, 0.999) | 5.80584e-09 |
+|    Adaptive LM |          24 |      326 |       34 |  (0.999, 0.999) | 2.56121e-08 |
+
+Starting Point:  (-100, 100)
+| Algorithm      | Iterations  | f_evals  | QR_evals |  Final (x, y)   | Final f(x)  |
+|----------------|-------------|----------|----------|-----------------|-------------|
+|    Newton + LS |      100000 |  2299984 |   100000 |  (-126., 15955) |     16209.5 |
+|  LS + Fallback |      100000 |  1849993 |   100000 |  (-643., 41451) |      415807 |
+|      Simple LM |         452 |     6327 |      899 |  (0.999, 0.999) | 2.30379e-09 |
+|    Adaptive LM |         332 |     4410 |      422 |  (0.999, 0.999) | 5.38102e-08 |
+
+Starting Point:  (2, 100)
+| Algorithm      | Iterations  | f_evals  | QR_evals |  Final (x, y)   | Final f(x)  |
+|----------------|-------------|----------|----------|-----------------|-------------|
+|    Newton + LS |        1444 |    33069 |     1444 |  (0.999, 0.999) | 3.49812e-11 |
+|  LS + Fallback |          14 |      189 |       14 |  (1.000, 1.000) | 3.12686e-09 |
+|      Simple LM |          14 |      192 |       20 |  (1.000, 1.000) | 1.35769e-10 |
+|    Adaptive LM |          15 |      204 |       20 |  (1.000, 1.000) | 9.29274e-10 |
+
+Here it should be noted that the maximum allowed iterations are 100000.
+We here see the Newton methods fail when evaluating far from the minimum at
+(-100,100). As this was not seen for the Himmelblau function, it is likely
+caused by the x^4 dependence resulting in a x^2 dependence in the Hessian
+matrix, making it ill-conditioned at x=100. This is validated by the (2,100) point
+where the Newton methods converge again as x is no longer extreme. One can
+also note that the fallback to a simple gradient descent for the point
+(2,100) lets the Fallback Newton converge way quicker. The gradient descent
+fallback was, however, not enough to save the Newton method for the
+(-100,100) point, likely due to its rather crude implementation, as we see
+that the LM methods, which default to gradient descent with small steps,
+safely navigate to the minimum. For the (-2,2) point, we also note again that
+while the Newton method uses more function evaluations, it uses fewer
+QR-evaluations.
+
+In total, when comparing the two, it would seem that the LM methods are
+generally more stable with equal/fewer function evaluations and equal/more
+QR evaluations. This means that they would be good for complex functions
+that are costly to evaluate, but their efficiency would decrease rapidly
+with functions in more dimensions as the QR solving process scales as
+O(N^3) for square matrices such as the Hessian.
+
+We can now investigate the impact of the initial damping parameter λ_0
+for both the simple and adaptive LM methods. For this, we will use the
+Rosenbrock function as it seems to be the most challenging one in this case.
+We'll try different starting points - do note that iterations will be
+shortened to It in the table, and Simple / Adapt imply the simple 
+and adaptive methods respectively.
+
+=================================================================================
+ INFLUENCE OF INITIAL LAMBDA_0 AT (-100, 100)
+=================================================================================
+| Lambda_0 | Simple It | Simple f_ev | Simple QR | Adapt It | Adapt f_ev | Adapt QR |
+|----------|-----------|-------------|-----------|----------|------------|----------|
+|    1e-07 |       482 |        6767 |       979 |      332 |       4416 |      428 |
+|    1e-05 |       350 |        4912 |       708 |      335 |       4452 |      428 |
+|    0.001 |       275 |        3856 |       552 |      330 |       4383 |      419 |
+|      0.1 |       452 |        6327 |       899 |      332 |       4410 |      422 |
+|        1 |       269 |        3762 |       530 |      329 |       4366 |      414 |
+|       10 |       269 |        3758 |       526 |      331 |       4399 |      423 |
+|      100 |       235 |        3279 |       455 |      221 |       2966 |      310 |
+|    10000 |        85 |        1172 |       148 |       99 |       1344 |      152 |
+|    1e+07 |        75 |        1022 |       118 |       68 |        917 |       97 |
+=================================================================================
+
+=================================================================================
+ INFLUENCE OF INITIAL LAMBDA_0 AT (1.5, 1.5)
+=================================================================================
+| Lambda_0 | Simple It | Simple f_ev | Simple QR | Adapt It | Adapt f_ev | Adapt QR |
+|----------|-----------|-------------|-----------|----------|------------|----------|
+|    1e-07 |        10 |         157 |        33 |       12 |        167 |       19 |
+|    1e-05 |        10 |         150 |        26 |       12 |        166 |       18 |
+|    0.001 |        10 |         144 |        20 |       10 |        138 |       14 |
+|      0.1 |        10 |         137 |        13 |       10 |        136 |       12 |
+|        1 |        11 |         147 |        11 |       10 |        134 |       10 |
+|       10 |        12 |         160 |        12 |       11 |        147 |       11 |
+|      100 |        15 |         199 |        15 |       12 |        160 |       12 |
+|    10000 |        21 |         277 |        21 |       16 |        212 |       16 |
+|    1e+07 |        31 |         407 |        31 |       22 |        290 |       22 |
+=================================================================================
+
+=================================================================================
+ INFLUENCE OF INITIAL LAMBDA_0 AT (1.1, 0.9)
+=================================================================================
+| Lambda_0 | Simple It | Simple f_ev | Simple QR | Adapt It | Adapt f_ev | Adapt QR |
+|----------|-----------|-------------|-----------|----------|------------|----------|
+|    1e-07 |         5 |          69 |         5 |        5 |         69 |        5 |
+|    1e-05 |         5 |          69 |         5 |        5 |         69 |        5 |
+|    0.001 |         5 |          69 |         5 |        5 |         69 |        5 |
+|      0.1 |         6 |          82 |         6 |        6 |         82 |        6 |
+|        1 |         7 |          95 |         7 |        6 |         82 |        6 |
+|       10 |         9 |         121 |         9 |        8 |        108 |        8 |
+|      100 |         7 |          95 |         7 |        4 |         56 |        4 |
+|    10000 |        18 |         238 |        18 |       13 |        173 |       13 |
+|    1e+07 |        28 |         368 |        28 |       19 |        251 |       19 |
+=================================================================================
+
+Generally, we see that the method seems to converge no matter the λ_0,
+showing the stability of the method. We can also note that when starting at
+a reasonable spot, a starting value that is neither too large nor too small
+seems to be optimal, as is generally the case. We can also note that the
+adaptive method generally uses fewer iterations and QR evaluations than the
+simple one. This is also to expectations as the algorithm is a bit more
+complex, and is as such generally faster to adapt. For the outlier point at
+(-100,100), we see that large λ_0 tend to fare better than the smaller ones.
+This is likely due to the previously mentioned ill-conditioned Hessian of
+the point, meaning that a large step is likely to fail, and as such,
+defaulting to a small gradient descent step as done by the large λ is
+generally safer. One could also note that the amount of iterations / QR-
+evaluations is nearly constant for low values for the adaptive one. This is
+likely due to the extreme scaling of λ when a step fails repeatedly
+(λ *= nu; nu *= 2; reset when a step succeeds), resulting in λ quickly
+becoming large no matter how small it started out. It should be noted that
+the simple implementation in some cases actually manages fewer iterations
+than the adaptive one; however, generally the amount of QR-evaluations will
+still be lower for the adaptive one.
