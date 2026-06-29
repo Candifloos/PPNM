@@ -185,7 +185,7 @@ int main(int argc, char** argv) {
               << "generally safer. One could also note that the amount of iterations / QR-\n"
               << "evaluations is nearly constant for low values for the adaptive one. This is\n"
               << "likely due to the extreme scaling of λ when a step fails repeatedly\n"
-              << "(λ *= nu; nu *= 2; reset when a step succeeds), resulting in λ quickly\n"
+              << "(λ *= nu; nu *= 2; reset nu when a step succeeds), resulting in λ quickly\n"
               << "becoming large no matter how small it started out. It should be noted that\n"
               << "the simple implementation in some cases actually manages fewer iterations\n"
               << "than the adaptive one; however, generally the amount of QR-evaluations will\n"

@@ -3,7 +3,7 @@ This project explores the Levenberg–Marquardt Trust-Region Damped Newton Minim
 (http://fedorov.sdf.org/prog/projex/levenberg-trust.htm).
 This README briefly summarizes what has been implemented and the main results.
 
-1. ALGORITHMS
+1. ALGORITHMS - can be found in "min.cc, min.h". Matrix and qr files are from previous homeworks.
 The project has 2 primary implemented algorithms, the standard Newton minimzation using back-tracking
 line search, and the Levenberg–Marquardt Trust-Region Damped Newton Minimizer (LM). The standard Newton
 was enhanced with an option to revert to a simple gradient descent in case of a step failing multiple 
@@ -11,11 +11,10 @@ times, this version will be referred to as LS + Fallback.
 The LM implementation is also split in two, a simple implementation where λ is always increased/decreased
 by 2 when a step is rejected/accepted, and a more sophisticated version depending on the ratio between the 
 reduction in the actual objective function and that predicted by the model. More precisely the calculation 
-of λ is (λ *= max(1/3, 1 - (2*ratio - 1)^3)); nu = 2; if the step succeeds, and (λ *= nu; nu *=2) if
+of λ is in this case (λ *= max(1/3, 1 - (2*ratio - 1)^3); nu = 2;) if the step succeeds, and (λ *= nu; nu *=2) if
 it fails, inspired by equation 2.21 in 
 METHODS FOR NON-LINEAR LEAST SQUARES PROBLEMS 2nd Edition, April 2004 K. Madsen, H.B. Nielsen, O. Tingleff
 (https://www2.imm.dtu.dk/pubdb/edoc/imm3215.pdf).
-
 
 2. RESULTS - This can be skipped if "Out.txt" is read (which includes explicit results).
 LM was found to generally be more stable than a simple Newton minimizer, generally using fewer iterations
@@ -40,6 +39,7 @@ In regards to prefered values for the initial damping parameter it was found tha
 guess for the starting position of the minimizer, a λ value not too large nor too small was optimal, 
 while for a guess far from the minimum large values was beneficial. The algorithm did however prove 
 rather stable to changes in initial damping parameter as it always converged, only the speed was affected.
+It was also seen that the adaptive LM method generally used fewer QR calls than the simple one.
 
 3. EVALUATION
 I believe we were told to self-evaluate the project, hence this short segment. 
