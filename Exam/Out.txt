@@ -181,7 +181,7 @@ defaulting to a small gradient descent step as done by the large λ is
 generally safer. One could also note that the amount of iterations / QR-
 evaluations is nearly constant for low values for the adaptive one. This is
 likely due to the extreme scaling of λ when a step fails repeatedly
-(λ *= nu; nu *= 2; reset when a step succeeds), resulting in λ quickly
+(λ *= nu; nu *= 2; reset nu when a step succeeds), resulting in λ quickly
 becoming large no matter how small it started out. It should be noted that
 the simple implementation in some cases actually manages fewer iterations
 than the adaptive one; however, generally the amount of QR-evaluations will
