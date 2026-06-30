@@ -5,7 +5,8 @@ This README briefly summarizes what has been implemented and the main results.
 
 1. ALGORITHMS - can be found in "min.cc, min.h". Matrix and qr files are from previous homeworks.
 The project has 2 primary implemented algorithms, the standard Newton minimzation using back-tracking
-line search, and the Levenberg–Marquardt Trust-Region Damped Newton Minimizer (LM). The standard Newton
+line search (which collectively will just be called (standard) Newton methods), 
+and the Levenberg–Marquardt Trust-Region Damped Newton Minimizer (LM). The standard Newton
 was enhanced with an option to revert to a simple gradient descent in case of a step failing multiple 
 times, this version will be referred to as LS + Fallback.
 The LM implementation is also split in two, a simple implementation where λ is always increased/decreased
@@ -19,10 +20,10 @@ METHODS FOR NON-LINEAR LEAST SQUARES PROBLEMS 2nd Edition, April 2004 K. Madsen,
 2. RESULTS - This can be skipped if "Out.txt" is read (which includes explicit results).
 LM was found to generally be more stable than a simple Newton minimizer, generally using fewer iterations
 and function evaluations. This is mainly believed to stem from its built-in reversion to gradient descent 
-as λ grows large. This is supported by the fact that the Fallback method generally performed closer to
-the LM methods. A notable exception is the Rosenbrock function with a minimization process started at
-(-100,100), where both Newton methods failed. This is likely due to the x^4 dependence of the Rosenbrock
-function leading to an ill-behaved Hessian matrix causing vast oversteps avoid by the trust region LM methods. 
+as λ grows large. This is supported by the fact that the Fallback method generally performed closer to the LM 
+methods. A notable exception is the Rosenbrock function with a minimization process started at (-100,100), 
+where both Newton methods failed. This is likely due to the x^4 dependence of the Rosenbrock function 
+leading to an ill-behaved Hessian matrix causing vast oversteps avoided by the trust region LM methods. 
 This hypothesis is supported by the fact that the Fallback method solved the problem on par with LM when 
 only the initial y-value was large, i.e. at point (2,100).
 Even though Newton generally seemed to use more iterations than the LM models, it should be noted that
